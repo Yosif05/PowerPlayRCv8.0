@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * run them to a given position.
  *
  * @author Lucian
- * @version 1.0
+ * @version 1.1
  */
 public class WrappedMotor {
     public DcMotorEx motor;
@@ -61,7 +61,7 @@ public class WrappedMotor {
         else
             direction = -1;
 
-        if (Math.abs(Math.abs(targetPosition) - Math.abs(currentPosition)) > tolerance)
+        if (Math.abs(targetPosition - currentPosition) > tolerance)
             motor.setPower(speed * direction);
         else if (hold)
             motor.setPower(0.1);
