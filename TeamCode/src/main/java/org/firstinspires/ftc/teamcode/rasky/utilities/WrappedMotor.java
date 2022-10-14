@@ -74,7 +74,7 @@ public class WrappedMotor {
     }
 
     public boolean isBusy() {
-        if (Math.abs(Math.abs(targetPosition) - Math.abs(currentPosition)) > tolerance)
+        if (Math.abs(targetPosition - currentPosition) > tolerance)
             return true;
         else
             return false;
