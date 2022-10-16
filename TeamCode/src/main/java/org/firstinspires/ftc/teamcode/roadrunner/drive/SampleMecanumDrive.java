@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.localization.ThreeTrackingWheelLocalizer;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
@@ -27,6 +28,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+import org.firstinspires.ftc.teamcode.rasky.utilities.Constants;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequenceRunner;
@@ -133,7 +135,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
-        // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
+        setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
     }
