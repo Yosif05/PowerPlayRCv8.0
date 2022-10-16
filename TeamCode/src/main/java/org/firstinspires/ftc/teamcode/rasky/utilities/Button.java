@@ -55,9 +55,8 @@ public class Button {
             if (!lockedToggle) {
                 toggleStatus = !toggleStatus;
                 lockedToggle = true;
-                return true;
             }
-            return false;
+            return true;
 
         } else {
             lockedToggle = false;

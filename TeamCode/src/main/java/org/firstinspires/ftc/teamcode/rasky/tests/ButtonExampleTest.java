@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.rasky.utilities.Constants;
  * It uses 3 buttons, one normal press, one toggle and one time based (short / long).
  *
  * @author Lucian
- * @version 1.1
+ * @version 1.2
  */
 @TeleOp(name = "Button Example Test", group = Constants.testGroup)
 public class ButtonExampleTest extends LinearOpMode {
@@ -52,7 +52,7 @@ public class ButtonExampleTest extends LinearOpMode {
             toggleBasedPress.updateButton(gamepad.y);
             timeBasedPress.updateButton(gamepad.b);
 
-            if (timeBasedPress.longPress() || timeBasedPress.shortPress())
+            if (timeBasedPress.longPress() || timeBasedPress.shortPress() || toggleBasedPress.toggle())
                 changedStatus++;
 
 
