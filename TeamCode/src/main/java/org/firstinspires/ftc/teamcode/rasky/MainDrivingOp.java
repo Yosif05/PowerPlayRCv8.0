@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.rasky.components.FieldCentricDrive;
+import org.firstinspires.ftc.teamcode.rasky.components.LiftClaw;
 import org.firstinspires.ftc.teamcode.rasky.components.LiftSystem;
 import org.firstinspires.ftc.teamcode.rasky.utilities.Button;
 import org.firstinspires.ftc.teamcode.rasky.utilities.Constants;
@@ -16,7 +17,7 @@ import org.firstinspires.ftc.teamcode.rasky.utilities.Gyroscope;
  * The main TeleOP program for the driving period of the game.
  *
  * @author Lucian
- * @version 1.2
+ * @version 2.0
  */
 @TeleOp(name = "Main Driving", group = Constants.mainGroup)
 public class MainDrivingOp extends LinearOpMode {
@@ -27,6 +28,7 @@ public class MainDrivingOp extends LinearOpMode {
     RobotCentricDrive robotCentricDrive;
     FieldCentricDrive fieldCentricDrive;
     LiftSystem liftSystem;
+    LiftClaw liftClaw;
 
     Gamepad drivingGamepad;
     Gamepad utilityGamepad;
@@ -44,8 +46,13 @@ public class MainDrivingOp extends LinearOpMode {
         liftSystem = new LiftSystem(hardwareMap, utilityGamepad);
         liftSystem.Init();
 
+        liftClaw = new LiftClaw(hardwareMap, utilityGamepad);
+        liftClaw.Init();
+
         gyroscope = new Gyroscope(hardwareMap);
         gyroscope.Init();
+
+
 
         robotCentricDrive = new RobotCentricDrive(motors, drivingGamepad);
         fieldCentricDrive = new FieldCentricDrive(motors, drivingGamepad, gyroscope);
@@ -72,12 +79,17 @@ public class MainDrivingOp extends LinearOpMode {
 
             if (!driveModeButton.getLongToggle()) {
                 robotCentricDrive.run();
+                //robotCentricDrive.showInfo(telemetry);
             } else {
                 fieldCentricDrive.run();
+                //fieldCentricDrive.showInfo(telemetry);
             }
 
             liftSystem.run();
-            liftSystem.showInfo(telemetry);
+            //liftSystem.showInfo(telemetry);
+
+            liftClaw.run();
+            liftClaw.showInfo(telemetry);
 
             telemetry.update();
         }

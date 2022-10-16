@@ -11,15 +11,15 @@ import org.firstinspires.ftc.teamcode.rasky.utilities.WrappedMotor;
  * The class that operates the lift.
  *
  * @author Lucian
- * @version 1.0
+ * @version 1.2
  */
 public class LiftSystem {
     Gamepad gamepad;
     HardwareMap hardwareMap;
-    WrappedMotor liftMotor;
+    public WrappedMotor liftMotor;
 
     double tolerance = 10;
-    double speed = 0.5;
+    double speed = 1;
 
     public LiftSystem(HardwareMap hardwareMap, Gamepad gamepad) {
         this.gamepad = gamepad;
@@ -31,18 +31,19 @@ public class LiftSystem {
      */
     public void Init() {
         liftMotor = new WrappedMotor(hardwareMap);
-        liftMotor.Init("liftMotor", false, false, true);
+        liftMotor.Init("liftMotor", true, false, true);
         liftMotor.setTolerance(tolerance);
         liftMotor.setSpeed(speed);
+        liftMotor.setEncoderDirection(1);
         liftMotor.holdMode(true);
     }
 
     //Lift positions in encoder ticks
     enum LiftPositions {
-        HIGH_JUNCTION(400),
-        MEDIUM_JUNCTION(300),
-        LOW_JUNCTION(200),
-        GROUND_JUNCTION(100),
+        HIGH_JUNCTION(1415),
+        MEDIUM_JUNCTION(975),
+        LOW_JUNCTION(575),
+        GROUND_JUNCTION(55),
         STARTING_POS(0);
 
         double position = 0;
@@ -91,10 +92,17 @@ public class LiftSystem {
     }
 
     public void showInfo(Telemetry telemetry) {
+        telemetry.addData("Lift NrState: ", toggleStates);
         telemetry.addData("Lift State: ", state);
-        telemetry.addData("Lift Position: ", liftMotor.motor.getCurrentPosition());
+
+        telemetry.addData("Lift TargetPos: ", liftMotor.targetPosition);
+        telemetry.addData("Lift Current Position: ", liftMotor.currentPosition);
+
         telemetry.addData("Motor Speed: ", speed);
+        telemetry.addData("Lift Encoder: ", liftMotor.motor.getCurrentPosition());
+
         telemetry.addData("Position Tolerance: ", tolerance);
+        telemetry.addData("Motor Direction: ", liftMotor.direction);
     }
 
 }
