@@ -21,6 +21,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'org.firstinspires.ftc:gameAssets-PowerPlay:1.0.0'
     //Added for RoadRunner - Lucian
-    implementation 'com.acmerobotics.dashboard:dashboard:0.4.4'
+    implementation 'com.acmerobotics.dashboard:dashboard:0.4.6'
 }
 
