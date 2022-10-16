@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.rasky.utilities.Constants;
  * Class meant for testing a servo in the normal (positioning) mode.
  *
  * @author Lucian
- * @version 1.0
+ * @version 1.1
  */
 @TeleOp(name = "Normal Servo Test", group = Constants.testGroup)
 public class NormalServoTest extends LinearOpMode {
@@ -54,24 +54,26 @@ public class NormalServoTest extends LinearOpMode {
         Button leftPos = new Button();
         Button midPos = new Button();
         Button rightPos = new Button();
+        ServoStates state = ServoStates.MIDDLE;
         //Main while loop that runs during the match
         while (opModeIsActive() && !isStopRequested()) {
-            ServoStates state = ServoStates.MIDDLE;
             leftPos.updateButton(gamepad.dpad_left);
             midPos.updateButton(gamepad.dpad_up);
             rightPos.updateButton(gamepad.dpad_right);
 
-            if (midPos.toggle()) {
+            if (midPos.press()) {
                 state = ServoStates.MIDDLE;
-            } else if (leftPos.toggle()) {
+            } else if (leftPos.press()) {
                 state = ServoStates.LEFT;
-            } else if (rightPos.toggle()) {
+            } else if (rightPos.press()) {
                 state = ServoStates.RIGHT;
             }
 
             servo.setPosition(state.value);
 
             telemetry.addData("Servo Position: ", state.name());
+            telemetry.addData("Servo True Position: ", servo.getPosition());
+            telemetry.addData("Servo Direction: ", servo.getDirection());
             telemetry.update();
         }
     }

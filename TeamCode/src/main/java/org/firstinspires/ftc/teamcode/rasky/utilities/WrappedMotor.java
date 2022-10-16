@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * run them to a given position.
  *
  * @author Lucian
- * @version 1.1
+ * @version 1.2
  */
 public class WrappedMotor {
     public DcMotorEx motor;
@@ -38,8 +38,8 @@ public class WrappedMotor {
     }
 
 
-    double targetPosition = 0;
-    double currentPosition = 0;
+    public double targetPosition = 0;
+    public double currentPosition = 0;
 
     public void setTargetPosition(double targetPosition) {
         this.targetPosition = targetPosition;
@@ -51,13 +51,13 @@ public class WrappedMotor {
         this.tolerance = tolerance;
     }
 
-    double direction = 1;
+    public double direction = 1;
 
     /**
      * Call this method asynchronously to update the lift's motor position.
      */
     public void updatePosition() {
-        currentPosition = motor.getCurrentPosition();
+        currentPosition = motor.getCurrentPosition() * encoderDirection;
 
         if (currentPosition <= targetPosition)
             direction = 1;
@@ -84,6 +84,12 @@ public class WrappedMotor {
         motor.setPower(power);
     }
 
+    public double encoderDirection = 1;
+
+    public void setEncoderDirection(double encoderDirection) {
+        this.encoderDirection = encoderDirection;
+    }
+
     double speed = 1;
 
     public void setSpeed(double speed) {
@@ -102,6 +108,7 @@ public class WrappedMotor {
         else
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+
 
     public void setDirection(boolean isReversed) {
         if (isReversed)
