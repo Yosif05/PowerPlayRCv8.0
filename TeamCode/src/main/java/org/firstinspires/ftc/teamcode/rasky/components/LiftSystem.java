@@ -54,37 +54,40 @@ public class LiftSystem {
     }
 
     Button resetButton = new Button();
-    Button liftButton = new Button();
-    LiftPositions state;
+    Button groundButton = new Button();
+    Button lowButton = new Button();
+    Button midButton = new Button();
+    Button highButton = new Button();
+    LiftPositions state = LiftPositions.STARTING_POS;
     int toggleStates = 0;
 
     public void run() {
-        resetButton.updateButton(gamepad.a);
-        liftButton.updateButton(gamepad.y);
 
-        if (resetButton.press())
+        resetButton.updateButton(gamepad.b);
+        groundButton.updateButton(gamepad.dpad_down);
+        lowButton.updateButton(gamepad.dpad_right);
+        midButton.updateButton(gamepad.dpad_left);
+        highButton.updateButton(gamepad.dpad_up);
+
+        if (resetButton.press()) {
+            state = LiftPositions.STARTING_POS;
             toggleStates = 0;
-
-
-        if (liftButton.toggle())
-            toggleStates++;
-
-        switch (toggleStates % 5) {
-            case 1:
-                state = LiftPositions.GROUND_JUNCTION;
-                break;
-            case 2:
-                state = LiftPositions.LOW_JUNCTION;
-                break;
-            case 3:
-                state = LiftPositions.MEDIUM_JUNCTION;
-                break;
-            case 4:
-                state = LiftPositions.HIGH_JUNCTION;
-                break;
-            default:
-                state = LiftPositions.STARTING_POS;
-                break;
+        }
+        else if(groundButton.press()) {
+            state = LiftPositions.GROUND_JUNCTION;
+            toggleStates = 1;
+        }
+        else if (lowButton.press()) {
+            state = LiftPositions.LOW_JUNCTION;
+            toggleStates = 2;
+        }
+        else if(midButton.press()) {
+            state = LiftPositions.MEDIUM_JUNCTION;
+            toggleStates = 3;
+        }
+        else if (highButton.press()) {
+            state = LiftPositions.HIGH_JUNCTION;
+            toggleStates = 4;
         }
 
         liftMotor.setTargetPosition(state.position);
