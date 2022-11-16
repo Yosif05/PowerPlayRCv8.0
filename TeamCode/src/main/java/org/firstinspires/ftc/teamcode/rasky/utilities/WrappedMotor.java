@@ -37,7 +37,6 @@ public class WrappedMotor {
         this.setBrakes(brakes);
     }
 
-
     public double targetPosition = 0;
     public double currentPosition = 0;
 
@@ -82,6 +81,10 @@ public class WrappedMotor {
 
     public void setPower(double power) {
         motor.setPower(power);
+    }
+
+    public int getCurrentPosition() {
+        return motor.getCurrentPosition();
     }
 
     public double encoderDirection = 1;
